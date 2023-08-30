@@ -1,3 +1,4 @@
 .stack-work/
 *~
 docker-volume/
+dist-newstyle/
