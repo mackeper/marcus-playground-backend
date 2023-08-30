@@ -35,5 +35,8 @@ jobs:
           
     - name: Build
       run: stack build
+      working-directory: ./src/Tracker/helloworld
+      
     - name: Run tests
       run: stack test
+      working-directory: ./src/Tracker/helloworld
