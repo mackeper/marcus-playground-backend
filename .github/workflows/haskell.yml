@@ -18,8 +18,8 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-haskell@v1
       with:
-        ghc-version: '8.10.4'
-        stack-version: '2.11.x'
+        ghc-version: 9.0.1
+        stack-version: 2.11.x
 
     - name: Cache
       uses: actions/cache@v3
