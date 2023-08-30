@@ -11,14 +11,16 @@ public sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddCors(options =>
             options.AddDefaultPolicy(policy =>
                 policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+
+
+        var urls = builder.Configuration.GetValue<string>("Urls") ?? "http://localhost:5000";
+        builder.WebHost.UseUrls(urls);
 
         var connectionString = builder.Configuration.GetConnectionString("Blog") ?? "Data Source=Blog.db";
         builder.Services.AddDbContext<BlogDbContext>(options => options.UseSqlite(connectionString));
@@ -31,14 +33,13 @@ public sealed class Program
             dbContext.Database.Migrate();
         }
 
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
 
-        //app.UseHttpsRedirection();
+        app.UseHttpsRedirection();
 
         AddEndpoints(app);
 
