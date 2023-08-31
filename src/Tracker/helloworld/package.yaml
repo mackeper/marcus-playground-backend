@@ -45,7 +45,7 @@ library:
   source-dirs: src
 
 executables:
-  helloworld-exe:
+  TrackerService:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
