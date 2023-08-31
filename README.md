@@ -1,5 +1,8 @@
 # Just a backend
-A collection of backend services used for my website (RealMoneyCompany)[https://realmoneycompany.com/]
+![haskell workflow](https://github.com/mackeper/marcus-playground-backend/actions/workflows/haskell.yml/badge.svg)
+![C# workflow](https://github.com/mackeper/marcus-playground-backend/actions/workflows/dotnet.yml/badge.svg)
+A collection of backend services used for my website [RealMoneyCompany](https://realmoneycompany.com/).
+
 
 ## Backend services
 ### Blog
