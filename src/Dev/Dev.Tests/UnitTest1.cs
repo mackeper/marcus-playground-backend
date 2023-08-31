@@ -1,4 +1,4 @@
-namespace DevTools.Tests;
+namespace Dev.Tests;
 
 public class UnitTest1
 {

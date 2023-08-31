@@ -21,8 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\CleanArc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AD5EC45B-CC1F-43A1-AD00-C2CCDB78B31D}"
 	ProjectSection(SolutionItems) = preProject
-		src\Ef-tools.md = src\Ef-tools.md
 		src\publish.md = src\publish.md
+		src\EntityFramework-cheatsheet.md = src\EntityFramework-cheatsheet.md
 		src\setup_server.md = src\setup_server.md
 	EndProjectSection
 EndProject
@@ -45,6 +45,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D35FC975-D433-4C58-83A1-A67C21D61144}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		README.md = README.md
 		publish-dotnet.ps1 = publish-dotnet.ps1
 	EndProjectSection
@@ -58,6 +59,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dev.Tests", "src\Dev\Dev.Tests\Dev.Tests.csproj", "{7BEF15BE-0FFB-469A-AAF9-A78907AA4824}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dev.Int.Tests", "src\Dev\Dev.Int.Tests\Dev.Int.Tests.csproj", "{F4EA0762-189F-4547-BFF7-737FCFC99E3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{4889C69A-3AA2-4854-B169-720789C7EE14}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -142,6 +149,7 @@ Global
 		{A4BEDFFA-672E-4153-88BC-D188264CE616} = {AD5EC45B-CC1F-43A1-AD00-C2CCDB78B31D}
 		{7BEF15BE-0FFB-469A-AAF9-A78907AA4824} = {A4BEDFFA-672E-4153-88BC-D188264CE616}
 		{F4EA0762-189F-4547-BFF7-737FCFC99E3A} = {A4BEDFFA-672E-4153-88BC-D188264CE616}
+		{4889C69A-3AA2-4854-B169-720789C7EE14} = {D35FC975-D433-4C58-83A1-A67C21D61144}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		        SolutionGuid = {306BA99E-C322-46A8-902E-3650A8979789}
