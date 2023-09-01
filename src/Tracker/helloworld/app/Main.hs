@@ -1,14 +1,10 @@
 module Main (main) where
 
 import Lib (startApp)
-import Persistence.Persistence (initializeDatabase)
 import Persistence.Visits (getVisitCount, incrementVisitCount)
 
 setupDatabase :: String -> IO ()
 setupDatabase path = do
-    initializeDatabase path
-    putStrLn "Database initialized."
-
     visit1 <- getVisitCount path
     putStrLn $ "Current visit count: " ++ show visit1
 
