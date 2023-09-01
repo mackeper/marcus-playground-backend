@@ -39,7 +39,7 @@ public sealed class Program
             app.UseSwaggerUI();
         }
 
-        app.UseHttpsRedirection();
+        //app.UseHttpsRedirection();
 
         AddEndpoints(app);
 
