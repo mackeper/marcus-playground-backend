@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 
-name:           helloworld
+name:           TrackerService
 version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/helloworld#readme>
 homepage:       https://github.com/githubuser/helloworld#readme
@@ -27,10 +27,12 @@ library
   exposed-modules:
       Api
       Lib
-      Persistence.Persistence
-      Persistence.Visits
+      Visits.Api
+      Visits.Migrations.Migration0001Init
+      Visits.Persistence
+      Visits.Visits
   other-modules:
-      Paths_helloworld
+      Paths_TrackerService
   hs-source-dirs:
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
@@ -49,15 +51,15 @@ library
 executable TrackerService
   main-is: Main.hs
   other-modules:
-      Paths_helloworld
+      Paths_TrackerService
   hs-source-dirs:
       app
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      aeson
+      TrackerService
+    , aeson
     , base >=4.7 && <5
     , directory
-    , helloworld
     , hspec
     , servant
     , servant-server
@@ -66,20 +68,21 @@ executable TrackerService
     , warp
   default-language: Haskell2010
 
-test-suite helloworld-test
+test-suite TrackerService-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Persistence.VisitsSpec
-      Paths_helloworld
+      Visits.Migrations.Migration0001InitSpec
+      Visits.PersistenceSpec
+      Paths_TrackerService
   hs-source-dirs:
       test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      aeson
+      TrackerService
+    , aeson
     , base >=4.7 && <5
     , directory
-    , helloworld
     , hspec
     , servant
     , servant-server

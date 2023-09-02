@@ -1,4 +1,4 @@
-name:                helloworld
+name:                TrackerService
 version:             0.1.0.0
 github:              "githubuser/helloworld"
 license:             BSD3
@@ -53,10 +53,10 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - helloworld
+    - TrackerService
 
 tests:
-  helloworld-test:
+  TrackerService-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -64,4 +64,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - helloworld
+    - TrackerService
