@@ -6,8 +6,8 @@ import Visits.Persistence (migrate, getVisitCount, incrementVisitCount)
 
 spec :: Spec
 spec = do
-    describe "initializeDatabase" $ do
-        it "Should create a table and insert a row if no rows exist" $ do
+    describe "migrate all" $ do
+        it "Run all migrations" $ do
             let testDbPath = "test.db"
             migrate testDbPath
 
