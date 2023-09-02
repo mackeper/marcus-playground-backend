@@ -11,6 +11,11 @@ A collection of backend services used for my website [RealMoneyCompany](https://
 
 Fetch and create blog entries.
 
+### BoardGames
+`Haskell | /src/BoardGames | Servant, Sqlite3-simple`
+
+Serve the different board games on the site.
+
 ### Dev
 `C# | /src/dev | ASP.NET, .NET 7`
 
