@@ -3,12 +3,12 @@
 
 module Api (API, api, server) where
 import Servant
-import Visits.Api (VisitsAPI, visitsServer)
+import qualified Visits.Api (API, server)
 
 type API
     = "bye" :> Get '[JSON] String
     :<|> "hello" :> Get '[JSON] String
-    :<|> VisitsAPI
+    :<|> Visits.Api.API
 
 api :: Proxy API
 api = Proxy
@@ -17,4 +17,4 @@ server :: Server API
 server
     = return "Bye!"
     :<|> return "Hello!"
-    :<|> visitsServer
+    :<|> Visits.Api.server

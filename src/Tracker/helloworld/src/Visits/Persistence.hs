@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Visits.Persistence
-  ( Visits.Persistence.migrate,
+  ( migrate,
     getVisitCount,
     incrementVisitCount,
   )
@@ -14,7 +14,7 @@ import Database.SQLite.Simple
     withConnection,
   )
 
-import Visits.Migrations.Migration0001Init (migrate)
+import qualified Visits.Migrations.Migration0001Init (migrate)
 
 migrate :: FilePath -> IO ()
 migrate dbPath = do

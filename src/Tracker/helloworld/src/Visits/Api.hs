@@ -2,22 +2,21 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE DeriveGeneric #-}
 
-module Visits.Api (VisitsAPI, visitsServer, getVisits, postVisits) where
+module Visits.Api (API, server, getVisits, postVisits) where
 
 import Servant
-import Network.Wai.Handler.Warp (run)
 import Data.Aeson (ToJSON)
 import GHC.Generics
 
 newtype Visits = Visits {visits :: Int} deriving (Generic, Show)
 instance ToJSON Visits
 
-type VisitsAPI
+type API
     = "visits" :> Get '[JSON] Visits
     :<|> "visits" :> Post '[JSON] Visits
 
-visitsServer :: Server VisitsAPI
-visitsServer
+server :: Server API
+server
     = getVisits
     :<|> postVisits
 
