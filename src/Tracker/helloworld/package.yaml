@@ -28,7 +28,9 @@ dependencies:
 - wai
 - sqlite-simple
 - hspec
+- hspec-wai
 - directory
+- text
 
 ghc-options:
 - -Wall

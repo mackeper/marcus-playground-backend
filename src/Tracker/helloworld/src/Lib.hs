@@ -1,19 +1,14 @@
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE TypeOperators #-}
-{-# LANGUAGE DeriveGeneric #-}
 
 module Lib
-    ( startApp
-    ) where
+  ( startApp,
+    app,
+  )
+where
 
-import Servant
-import Network.Wai.Handler.Warp (run)
-import Data.Aeson (ToJSON)
-import GHC.Generics
 import Api (api, server)
-
-newtype Visits = Visits {visits :: Int} deriving (Generic, Show)
-instance ToJSON Visits
+import Network.Wai.Handler.Warp (run)
+import Servant (Application, serve)
 
 startApp :: Int -> IO ()
 startApp port = run port app

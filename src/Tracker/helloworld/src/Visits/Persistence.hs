@@ -8,13 +8,12 @@ module Visits.Persistence
 where
 
 import Database.SQLite.Simple
-  ( Only (Only),
-    execute_,
+  ( execute_,
     query_,
     withConnection,
   )
-
-import qualified Visits.Migrations.Migration0001Init (migrate)
+import Visits.Migrations.Migration0001Init qualified (migrate)
+import Visits.Visits (Visits)
 
 migrate :: FilePath -> IO ()
 migrate dbPath = do
@@ -23,12 +22,12 @@ migrate dbPath = do
 getVisitCount :: FilePath -> IO Int
 getVisitCount dbPath = do
   withConnection dbPath $ \conn -> do
-    r <- query_ conn "SELECT count FROM visits"
+    r <- query_ conn "SELECT * FROM visits" :: IO [Visits]
     case r of
       [] -> return 0
-      (Only count) : _ -> return count
+      x -> return $ length x
 
 incrementVisitCount :: FilePath -> IO ()
 incrementVisitCount dbPath = do
   withConnection dbPath $ \conn -> do
-    execute_ conn "UPDATE visits SET count = count + 1"
+    execute_ conn "INSERT INTO visits (count) VALUES (0)"

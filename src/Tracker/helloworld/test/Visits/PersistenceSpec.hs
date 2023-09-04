@@ -1,44 +1,44 @@
 module Visits.PersistenceSpec (spec) where
 
-import Test.Hspec
 import System.Directory
-import Visits.Persistence (migrate, getVisitCount, incrementVisitCount)
+import Test.Hspec
+import Visits.Persistence (getVisitCount, incrementVisitCount, migrate)
 
 spec :: Spec
 spec = do
-    describe "migrate all" $ do
-        it "Run all migrations" $ do
-            let testDbPath = "test.db"
-            migrate testDbPath
+  describe "migrate all" $ do
+    it "Run all migrations" $ do
+      let testDbPath = "test.db"
+      migrate testDbPath
 
-            existingVisits <- getVisitCount testDbPath
-            existingVisits `shouldBe` 0
+      existingVisits <- getVisitCount testDbPath
+      existingVisits `shouldBe` 0
 
-            -- Clean up the test database
-            removeFile testDbPath
+      -- Clean up the test database
+      removeFile testDbPath
 
-    describe "getVisitCount" $ do
-        it "Should get the visit count" $ do
-            let testDbPath = "test.db"
-            migrate testDbPath
+  describe "getVisitCount" $ do
+    it "Should get the visit count" $ do
+      let testDbPath = "test.db"
+      migrate testDbPath
 
-            existingVisits <- getVisitCount testDbPath
-            existingVisits `shouldBe` 0
+      existingVisits <- getVisitCount testDbPath
+      existingVisits `shouldBe` 0
 
-            -- Clean up the test database
-            removeFile testDbPath
-    
-    describe "incrementVisitCount" $ do
-        it "Should increment the visit count" $ do
-            let testDbPath = "test.db"
-            migrate testDbPath
+      -- Clean up the test database
+      removeFile testDbPath
 
-            existingVisits <- getVisitCount testDbPath
-            existingVisits `shouldBe` 0
+  describe "incrementVisitCount" $ do
+    it "Should increment the visit count" $ do
+      let testDbPath = "test.db"
+      migrate testDbPath
 
-            incrementVisitCount testDbPath
-            existingVisits2 <- getVisitCount testDbPath
-            existingVisits2 `shouldBe` 1
+      existingVisits <- getVisitCount testDbPath
+      existingVisits `shouldBe` 0
 
-            -- Clean up the test database
-            removeFile testDbPath
+      incrementVisitCount testDbPath
+      existingVisits2 <- getVisitCount testDbPath
+      existingVisits2 `shouldBe` 1
+
+      -- Clean up the test database
+      removeFile testDbPath
