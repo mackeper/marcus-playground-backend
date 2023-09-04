@@ -1,7 +1,7 @@
 module Visits.Migrations.Migration0001InitSpec (spec) where
 
-import Test.Hspec
 import System.Directory
+import Test.Hspec
 import Visits.Migrations.Migration0001Init (migrate)
 
 spec :: Spec

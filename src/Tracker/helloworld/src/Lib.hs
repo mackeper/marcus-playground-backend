@@ -1,10 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 
-module Lib
-  ( startApp,
-    app,
-  )
-where
+module Lib (startApp, app) where
 
 import Api (api, server)
 import Network.Wai.Handler.Warp (run)

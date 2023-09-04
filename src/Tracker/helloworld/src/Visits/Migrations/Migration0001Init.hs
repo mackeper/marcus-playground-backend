@@ -2,10 +2,7 @@
 
 module Visits.Migrations.Migration0001Init (migrate) where
 
-import Database.SQLite.Simple
-  ( execute_,
-    withConnection,
-  )
+import Database.SQLite.Simple (execute_, withConnection)
 
 initializeDatabase :: FilePath -> IO ()
 initializeDatabase dbPath = do

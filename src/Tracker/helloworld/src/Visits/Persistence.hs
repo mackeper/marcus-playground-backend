@@ -1,17 +1,18 @@
+{-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Visits.Persistence
-  ( migrate,
-    getVisitCount,
-    incrementVisitCount,
-  )
+module Visits.Persistence (
+  migrate,
+  getVisitCount,
+  incrementVisitCount,
+)
 where
 
-import Database.SQLite.Simple
-  ( execute_,
-    query_,
-    withConnection,
-  )
+import Database.SQLite.Simple (
+  execute_,
+  query_,
+  withConnection,
+ )
 import Visits.Migrations.Migration0001Init qualified (migrate)
 import Visits.Visits (Visits)
 

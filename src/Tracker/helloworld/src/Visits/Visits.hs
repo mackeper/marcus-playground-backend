@@ -7,22 +7,22 @@ import Database.SQLite.Simple (FromRow (fromRow), field)
 import GHC.Generics
 
 newtype Visits = Visits
-  { count :: Int
-  }
-  deriving (Generic, Show, Eq)
+    { count :: Int
+    }
+    deriving (Generic, Show, Eq)
 
 instance ToJSON Visits
 
 instance FromJSON Visits
 
 instance FromRow Visits where
-  fromRow = Visits <$> field
+    fromRow = Visits <$> field
 
 createVisits :: Visits
-createVisits = Visits {count = 0}
+createVisits = Visits{count = 0}
 
 incrementVisitCount :: Visits -> Visits
-incrementVisitCount visits = visits {count = count visits + 1}
+incrementVisitCount visits = visits{count = count visits + 1}
 
 getVisitCount :: Visits -> Int
 getVisitCount = count
