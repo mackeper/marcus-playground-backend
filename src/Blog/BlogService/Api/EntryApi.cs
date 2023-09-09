@@ -17,10 +17,11 @@ internal sealed class EntryApi
 
     public void AddEndpoints(WebApplication app)
     {
-        app.MapGet("/entries", GetEntries);
-        app.MapGet("/entries/{id}", GetEntryById);
-        app.MapPost("/entries", CreateEntry);
-        app.MapPut("/entries/{id}", UpdateEntry);
+        var group = app.MapGroup("/entries");
+        group.MapGet("", GetEntries);
+        group.MapGet("{id}", GetEntryById);
+        group.MapPost("", CreateEntry);
+        group.MapPut("{id}", UpdateEntry);
     }
 
     private async Task<IEnumerable<EntryDTO>> GetEntries(BlogDbContext db)
