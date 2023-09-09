@@ -1,2 +1,2 @@
 ﻿namespace Domain;
-public class AssemblyReference {}
+public class AssemblyReference { }

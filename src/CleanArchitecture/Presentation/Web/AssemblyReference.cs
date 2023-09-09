@@ -1,2 +1,2 @@
 ﻿namespace Web;
-public class AssemblyReference {}
+public class AssemblyReference { }

@@ -2,7 +2,7 @@
 
 internal sealed class Entry : IEntity
 {
-    public int Id { get; private set;  }
+    public int Id { get; private set; }
     public string Title { get; set; }
     public string Content { get; set; }
     public string[] Tags { get; set; }

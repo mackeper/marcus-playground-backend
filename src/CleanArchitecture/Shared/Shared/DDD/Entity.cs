@@ -8,7 +8,7 @@ public abstract class Entity : IEntity, IEquatable<Entity>
         Id = id;
     }
 
-    public static bool operator==(Entity? first, Entity? second) => first is not null && second is not null && first.Equals(second);
+    public static bool operator ==(Entity? first, Entity? second) => first is not null && second is not null && first.Equals(second);
     public static bool operator !=(Entity? first, Entity? second) => !(first == second);
 
     public override bool Equals(object? obj)

@@ -20,13 +20,13 @@ public class Error : IEquatable<Error>
 
     public static implicit operator string(Error error) => error.Code;
 
-    public static bool operator==(Error? first, Error? second)
+    public static bool operator ==(Error? first, Error? second)
     {
         if (first is null && second is null) return true;
         if (first is null || second is null) return false;
         return first.Equals(second);
     }
-    public static bool operator!=(Error? first, Error? second) => !(first == second);
+    public static bool operator !=(Error? first, Error? second) => !(first == second);
 
     public bool Equals(Error? other) => other is not null && Code == other.Code && Message == other.Message;
     public override bool Equals(Object? obj) => obj is not null && obj is Error other && Code == other.Code && Message == other.Message;

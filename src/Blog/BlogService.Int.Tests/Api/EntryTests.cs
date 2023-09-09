@@ -209,7 +209,7 @@ public sealed class EntryTests
     public static async Task CreateEntry_InvalidInput_ReturnsBadRequest(string title, string content, string[] tags, long createdAt, bool published)
     {
         // Arrange
-        var invalidEntry = CreateEntry(0, title, content, tags, DateTimeOffset.FromUnixTimeMilliseconds(createdAt).DateTime , published: published);
+        var invalidEntry = CreateEntry(0, title, content, tags, DateTimeOffset.FromUnixTimeMilliseconds(createdAt).DateTime, published: published);
         var factory = CreateFactory();
 
         // Act

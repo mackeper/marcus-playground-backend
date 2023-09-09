@@ -35,4 +35,4 @@ public class Program
     {
         new Tools.GuidGenerator.Api().RegisterEndpoints(app);
     }
-}   
+}

@@ -4,7 +4,7 @@ using SharedKernel.DDD;
 
 namespace Architecture.Tests;
 public class DomainTests
-{ 
+{
     [Fact]
     public void ValueObjects_Should_Be_Immutable()
     {

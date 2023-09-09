@@ -16,7 +16,7 @@ public class Routes
         var createItemEndpoint = new CreateItemEndpoint(logger);
         var itemEndpoint = new ItemsEndpoint(logger);
 
-        builder.MapPost("/todo", ([FromHeader]name) => createItemEndpoint.Handle());
+        builder.MapPost("/todo", ([FromHeader] name) => createItemEndpoint.Handle());
         builder.MapGet("/todo", () => itemEndpoint.Handle());
     }
 }
