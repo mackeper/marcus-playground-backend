@@ -223,14 +223,20 @@ public sealed class EntryTests
     public static async Task UpdateEntry_ValidInput_ReturnsOk()
     {
         // Arrange
-        var entryToUpdate = CreateEntryDTO();
-        var factory = CreateFactory(CreateEntry());
+        var entryToUpdate = CreateEntry(title: "Old title");
+        var newEntry = CreateEntryDTO(title: "New title");
+        var factory = CreateFactory(entryToUpdate);
+        Assert.Equal("Old title", entryToUpdate.Title);
+        Assert.Equal("New title", newEntry.Title);
 
         // Act
-        var response = await factory.CreateClient().PutAsJsonAsync("/entries/1", entryToUpdate);
+        var response = await factory.CreateClient().PutAsJsonAsync("/entries/1", newEntry);
+        var updatedEntryResponse = await factory.CreateClient().GetAsync("/entries/1");
 
         // Assert
         response.EnsureSuccessStatusCode();
+        var updatedEntry = await updatedEntryResponse.Content.ReadFromJsonAsync<EntryDTO>();
+        Assert.Equal("New title", updatedEntry.Title);
     }
 
     [Fact]
