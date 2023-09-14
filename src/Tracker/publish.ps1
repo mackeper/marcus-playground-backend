@@ -61,7 +61,7 @@ function Main {
     # Define the list of files to copy, relative to the source directory
     $fileList = @(
         "package.yaml",
-        "helloworld.cabal",
+        "TrackerService.cabal",
         "stack.yaml",
         "stack.yaml.lock",
         "src",
@@ -73,7 +73,7 @@ function Main {
         "CHANGELOG.md"
     )
 
-    Clear-Directory -directory $destinationDir
+    # Clear-Directory -directory $destinationDir
     New-Directory -directory $destinationDir
     Copy-FilesToDirectory -sourceDirectory $sourceDir -destinationDirectory $destinationDir -fileList $fileList
     CheckAndCreateDockerImage -imageName $imageName -imageTag $imageTag -dockerfilePath $destinationDir

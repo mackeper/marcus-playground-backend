@@ -7,6 +7,9 @@ import Visits.Persistence (
     migrate,
  )
 
+import Data.Time
+import Visits.Visit (createVisit)
+
 setupDatabase :: String -> IO ()
 setupDatabase path = do
     migrate path
@@ -14,7 +17,7 @@ setupDatabase path = do
     visit1 <- getVisitCount path
     putStrLn $ "Current visit count: " ++ show visit1
 
-    incrementVisitCount path
+    _ <- incrementVisitCount path (createVisit "https://realmoneycompany.com" UTCTime{utctDay = fromGregorian 2023 1 1, utctDayTime = timeOfDayToTime (TimeOfDay 0 0 0)})
 
     visit2 <- getVisitCount path
     putStrLn $ "Current visit count: " ++ show visit2
@@ -27,4 +30,4 @@ main = do
     setupDatabase dbPath
 
     putStrLn $ "Starting server on port " ++ show port ++ "..."
-    startApp port
+    startApp port dbPath

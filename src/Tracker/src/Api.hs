@@ -15,8 +15,8 @@ type API =
 api :: Proxy API
 api = Proxy
 
-server :: Server API
-server =
+server :: String -> Server API
+server dbpath =
     return "Bye!"
         :<|> return "Hello!"
-        :<|> Visits.Api.server
+        :<|> Visits.Api.server dbpath

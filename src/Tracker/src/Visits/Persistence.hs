@@ -5,16 +5,18 @@ module Visits.Persistence (
   migrate,
   getVisitCount,
   incrementVisitCount,
+  getVisits,
 )
 where
 
+import Data.Time
 import Database.SQLite.Simple (
-  execute_,
+  execute,
   query_,
   withConnection,
  )
 import Visits.Migrations.Migration0001Init qualified (migrate)
-import Visits.Visits (Visits)
+import Visits.Visit (Visit, createVisit)
 
 migrate :: FilePath -> IO ()
 migrate dbPath = do
@@ -23,12 +25,21 @@ migrate dbPath = do
 getVisitCount :: FilePath -> IO Int
 getVisitCount dbPath = do
   withConnection dbPath $ \conn -> do
-    r <- query_ conn "SELECT * FROM visits" :: IO [Visits]
+    r <- query_ conn "SELECT * FROM visit" :: IO [Visit]
     case r of
       [] -> return 0
       x -> return $ length x
 
-incrementVisitCount :: FilePath -> IO ()
-incrementVisitCount dbPath = do
+getVisits :: FilePath -> IO [Visit]
+getVisits dbPath = do
   withConnection dbPath $ \conn -> do
-    execute_ conn "INSERT INTO visits (count) VALUES (0)"
+    query_ conn "SELECT * FROM visit" :: IO [Visit]
+
+incrementVisitCount :: FilePath -> Visit -> IO (Maybe Visit)
+incrementVisitCount dbPath visit = do
+  withConnection dbPath $ \conn -> do
+    execute conn "INSERT INTO visit (url, time) VALUES (?, ?)" visit
+    newVisit <- query_ conn "SELECT * FROM visit WHERE id = (SELECT MAX(id) FROM visit)" :: IO [Visit]
+    return $ case newVisit of
+      [x] -> Just x
+      _ -> Nothing

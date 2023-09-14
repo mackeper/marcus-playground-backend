@@ -3,3 +3,5 @@
 docker-volume/
 dist-newstyle/
 out/
+
+*.sql

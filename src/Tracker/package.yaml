@@ -31,6 +31,11 @@ dependencies:
   - hspec-wai
   - directory
   - text
+  - wai-cors
+  - time
+  - http-types
+  - wai-extra
+  - bytestring
 
 ghc-options:
   - -Wall

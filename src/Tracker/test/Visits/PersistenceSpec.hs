@@ -1,3 +1,5 @@
+{-# LANGUAGE ImportQualifiedPost #-}
+
 module Visits.PersistenceSpec (spec) where
 
 import System.Directory
@@ -8,38 +10,38 @@ import Visits.Persistence (
     migrate,
  )
 
+import Data.Time
+import Visits.Visit qualified (Visit, createVisit)
+
+createVisit :: Visits.Visit.Visit
+createVisit = Visits.Visit.createVisit "https://realmoneycompany.com" UTCTime{utctDay = fromGregorian 2023 1 1, utctDayTime = timeOfDayToTime (TimeOfDay 0 0 0)}
+
+dbpath :: String
+dbpath = "test.db"
+
 spec :: Spec
-spec = do
-    describe "migrate all"
+spec =
+    before (migrate dbpath)
+        $ after (\_ -> removeFile dbpath)
         $ do
-            it "Run all migrations"
+            describe "migrate all"
                 $ do
-                    let testDbPath = "test.db"
-                    migrate testDbPath
-                    existingVisits <- getVisitCount testDbPath
-                    existingVisits `shouldBe` 0
-                    -- Clean up the test database
-                    removeFile testDbPath
-    describe "getVisitCount"
-        $ do
-            it "Should get the visit count"
+                    it "Run all migrations"
+                        $ do
+                            existingVisit <- getVisitCount dbpath
+                            existingVisit `shouldBe` 0
+            describe "getVisitCount"
                 $ do
-                    let testDbPath = "test.db"
-                    migrate testDbPath
-                    existingVisits <- getVisitCount testDbPath
-                    existingVisits `shouldBe` 0
-                    -- Clean up the test database
-                    removeFile testDbPath
-    describe "incrementVisitCount"
-        $ do
-            it "Should increment the visit count"
+                    it "Should get the visit count"
+                        $ do
+                            existingVisit <- getVisitCount dbpath
+                            existingVisit `shouldBe` 0
+            describe "incrementVisitCount"
                 $ do
-                    let testDbPath = "test.db"
-                    migrate testDbPath
-                    existingVisits <- getVisitCount testDbPath
-                    existingVisits `shouldBe` 0
-                    incrementVisitCount testDbPath
-                    existingVisits2 <- getVisitCount testDbPath
-                    existingVisits2 `shouldBe` 1
-                    -- Clean up the test database
-                    removeFile testDbPath
+                    it "Should increment the visit count"
+                        $ do
+                            existingVisit <- getVisitCount dbpath
+                            existingVisit `shouldBe` 0
+                            _ <- incrementVisitCount dbpath createVisit
+                            existingVisit2 <- getVisitCount dbpath
+                            existingVisit2 `shouldBe` 1

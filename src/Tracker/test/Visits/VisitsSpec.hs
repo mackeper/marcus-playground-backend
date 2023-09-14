@@ -3,32 +3,31 @@
 module Visits.VisitsSpec (spec) where
 
 import Data.Aeson (decode, encode)
-import Test.Hspec
-import Visits.Visits (
-    Visits,
-    createVisits,
-    getVisitCount,
-    incrementVisitCount,
+import Data.Time (
+    TimeOfDay (TimeOfDay),
+    UTCTime (..),
+    fromGregorian,
+    timeOfDayToTime,
  )
+import Test.Hspec (Spec, describe, it, shouldBe)
+import Visits.Visit (
+    Visit,
+    createVisit,
+ )
+
+url :: String
+url = "https://realmoneycompany.com"
+
+time :: UTCTime
+time = UTCTime{utctDay = fromGregorian 2023 1 1, utctDayTime = timeOfDayToTime (TimeOfDay 0 0 0)}
 
 spec :: Spec
 spec = do
-    describe "Visits" $ do
-        it "create should have 0 count" $ do
-            let visits = createVisits
-            getVisitCount visits `shouldBe` 0
-        it "increment should add 1 to count" $ do
-            let visits1 = createVisits
-            let visits2 = incrementVisitCount visits1
-            let visits3 = incrementVisitCount visits2
-            getVisitCount visits1 `shouldBe` 0
-            getVisitCount visits2 `shouldBe` 1
-            getVisitCount visits3 `shouldBe` 2
+    describe "Visit" $ do
         it "ToJson" $ do
-            let visits = createVisits
-            getVisitCount visits `shouldBe` 0
-            encode visits `shouldBe` "{\"count\":0}"
+            let visit = createVisit url time
+            encode visit `shouldBe` "{\"id\":0,\"time\":\"2023-01-01T00:00:00Z\",\"url\":\"https://realmoneycompany.com\"}"
         it "FromJson" $ do
-            let visits = createVisits
-            let result = decode "{\"count\":0}" :: Maybe Visits
-            result `shouldBe` Just visits
+            let visit = createVisit url time
+            let result = decode "{\"id\":0, \"url\":\"https://realmoneycompany.com\", \"time\":\"2023-01-01T00:00:00Z\"}" :: Maybe Visit
+            result `shouldBe` Just visit
