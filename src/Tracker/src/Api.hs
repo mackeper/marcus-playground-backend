@@ -16,7 +16,7 @@ api :: Proxy API
 api = Proxy
 
 server :: String -> Server API
-server dbpath =
+server dbpath = do
     return "Bye!"
         :<|> return "Hello!"
         :<|> Visits.Api.server dbpath

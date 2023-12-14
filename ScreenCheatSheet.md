@@ -11,7 +11,7 @@
 ```bash
 pkill screen
 screen -ls | grep '(Detached)' | awk 'sys {screen -S $1 -X quit}'
-screen -S dev -X "./home/macke/Services/Dev/DevService"
-screen -S dev -X "./home/macke/Services/Blog/BlogService"
-screen -S dev -X "./home/macke/Services/Tracker/TrackerService"
+cd /home/macke/Services/Dev && screen -dmS dev Dev
+cd /home/macke/Services/Blog && screen -dmS blog BlogService
+cd /home/macke/Service/Tracker && screen -dmS tracker TrackerService
 ```

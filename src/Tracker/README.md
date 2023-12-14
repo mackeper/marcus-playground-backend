@@ -4,7 +4,7 @@ Stack: Servant API with sqlite-simple persistence.
 
 Keep track on website usage, visits, etc.
 
-## Dev
+## Development :sparkles:
 
 ### Setup
 

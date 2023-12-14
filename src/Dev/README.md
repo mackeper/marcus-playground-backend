@@ -1,4 +1,4 @@
-# Blog
+# Dev
 
 ## Development :sparkles:
 
@@ -11,7 +11,7 @@ dotnet build
 ### Run
 
 ```bash
-dotnet run --project BlogService
+dotnet run --project Dev
 ```
 
 ### Test
@@ -19,4 +19,3 @@ dotnet run --project BlogService
 ```bash
 dotnet test
 ```
-
