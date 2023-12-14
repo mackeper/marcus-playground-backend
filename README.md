@@ -53,3 +53,17 @@ Tracking visits on the website.
 
 `dotnet user-secrets init`  
 `dotnet user-secrets set "ConnectionStrings:default" "This is from user secrets"`  
+
+## Roadmap :world_map:
+
+- [ ] Add more board games :game_die:
+- [ ] Add more dev tools :hammer_and_wrench:
+
+## FAQ :question:
+
+- Q: Why is the code so bad?
+  - A:...
+
+## Support :love_letter:
+
+Submit an [issue!](https://github.com/mackeper/marcus-playground-backend/issues/new?assignees=&labels=question&projects=&template=question.yaml&title=%5BQUESTION%5D+%3Ctitle%3E)
