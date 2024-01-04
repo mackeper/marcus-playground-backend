@@ -40,6 +40,12 @@ Mostly different dev tools. E.g. generate a guid.
 
 Tracking visits on the website.
 
+### [UsernameGenerator](./src/UsernameGenerator//README.md)
+
+`Rust | /src/UsernameGenerator | Axum`
+
+Generate a random username.
+
 ## Development :sparkles:
 
 ### Prerequisites :heavy_check_mark:
