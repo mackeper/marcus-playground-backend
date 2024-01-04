@@ -34,6 +34,7 @@ nupkg/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+[Tt]arget/
 x64/
 x86/
 build/
