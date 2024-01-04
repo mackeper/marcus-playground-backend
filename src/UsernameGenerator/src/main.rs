@@ -3,20 +3,27 @@ mod components;
 use axum::{
     extract::Query,
     routing::get,
-    http::StatusCode,
+    http::{StatusCode, header::CONTENT_TYPE, Method},
     Json,
     Router,
 };
 use components::{get_animal, get_adjective, get_nouns, get_cool_numbers};
 use serde::{Deserialize};
 use serde_with::{serde_as};
+use tower_http::cors::{CorsLayer, Any};
 
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt::init();
 
+    let cors = CorsLayer::new()
+        .allow_methods([Method::GET])
+        .allow_origin(Any)
+        .allow_headers([CONTENT_TYPE]);
+
     let app = Router::new()
-        .route("/", get(get_username));
+        .route("/", get(get_username))
+        .layer(cors);
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:5004").await.unwrap();
     axum::serve(listener, app).await.unwrap();
