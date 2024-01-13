@@ -4,6 +4,7 @@
 
 ![haskell workflow](https://github.com/mackeper/marcus-playground-backend/actions/workflows/haskell.yml/badge.svg)
 ![C# workflow](https://github.com/mackeper/marcus-playground-backend/actions/workflows/dotnet.yml/badge.svg)
+[![Rust](https://github.com/mackeper/marcus-playground-backend/actions/workflows/rust.yml/badge.svg)](https://github.com/mackeper/marcus-playground-backend/actions/workflows/rust.yml)
 
 A collection of backend services used for my website [RealMoneyCompany](https://realmoneycompany.com/).
 
