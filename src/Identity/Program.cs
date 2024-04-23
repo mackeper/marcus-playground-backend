@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,13 +13,23 @@ internal class Program {
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        // Get configuration
+        var urls = builder.Configuration.GetValue<string>("Urls") ?? "http://localhost:5005";
+        builder.WebHost.UseUrls(urls);
+
+        var connectionString = builder.Configuration.GetConnectionString("Identity") ?? "Data Source=Identity.db";
+
+        // Authorization
         builder.Services.AddAuthorization();
-
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseInMemoryDatabase("AppDb"));
-
+            options.UseSqlite(connectionString));
         builder.Services.AddIdentityApiEndpoints<IdentityUser>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
+        using (var scope = builder.Services.BuildServiceProvider().CreateScope()) {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            dbContext.Database.Migrate();
+        }
 
         var app = builder.Build();
 
@@ -30,7 +39,7 @@ internal class Program {
             app.UseSwaggerUI();
         }
 
-        /* app.UseHttpsRedirection(); */
+        app.UseHttpsRedirection();
 
         var summaries = new[]
         {
