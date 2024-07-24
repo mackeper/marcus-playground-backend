@@ -1,4 +1,7 @@
-﻿namespace Dashboard;
+﻿using Dashboard.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+
+namespace Dashboard;
 
 public class Program {
     public static void Main(string[] args) {
@@ -14,11 +17,22 @@ public class Program {
         var urls = builder.Configuration.GetValue<string>("Urls") ?? "http://localhost:5006";
         builder.WebHost.UseUrls(urls);
 
+        var connectionString = builder.Configuration.GetConnectionString("Dashboard") ?? "Data Source=Dashboard.db";
+        builder.Services.AddDbContext<DashboardDbContext>(options => options.UseSqlite(connectionString));
+
         var app = builder.Build();
+
+        using (var scope = app.Services.CreateScope()) {
+            var dbContext = scope.ServiceProvider.GetRequiredService<DashboardDbContext>();
+            dbContext.Database.Migrate();
+        }
 
         if (app.Environment.IsDevelopment()) {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(options => {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                options.RoutePrefix = string.Empty;
+            });
         }
 
         if (app.Environment.IsProduction()) {
@@ -33,38 +47,6 @@ public class Program {
     }
 
     private static void AddEndpoints(WebApplication app) {
-        var summaries = new[]
-        {
-            "Freezing",
-            "Bracing",
-            "Chilly",
-            "Cool",
-            "Mild",
-            "Warm",
-            "Balmy",
-            "Hot",
-            "Sweltering",
-            "Scorching"
-        };
-
-        app.MapGet("/weatherforecast", () => {
-            var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-                .ToArray();
-            return forecast;
-        })
-        .WithName("GetWeatherForecast")
-        .WithOpenApi();
-
-        new Todo.Api().RegisterEndpoints(app);
-    }
-
-    record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary) {
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        new Todo.Api(new EntryMapper()).RegisterEndpoints(app);
     }
 }

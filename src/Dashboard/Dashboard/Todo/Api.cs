@@ -1,19 +1,31 @@
+﻿using Dashboard.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+
 namespace Dashboard.Todo;
 
-public class Api
-{
-    public void RegisterEndpoints(WebApplication app)
-    {
-        app.MapGet("/todo", Items);
+public class Api {
+    private readonly EntryMapper entryMapper;
+
+    public Api(EntryMapper entryMapper) {
+        this.entryMapper = entryMapper;
     }
 
-    private Item[] Items() => new[]
-    {
-        new Item { Title = "Feed the cats" },
-        new Item { Title = "Clean the bathroom" },
-        new Item { Title = "Wash the dishes" },
-        new Item { Title = "Vacuum the living room" },
-        new Item { Title = "Mow the lawn" }
-    };
+    public void RegisterEndpoints(WebApplication app) {
+        var group = app.MapGroup("/todo");
+        group.MapGet("", GetEntries);
+        group.MapPost("", CreateEntry);
+    }
 
+    private async Task<IEnumerable<EntryDTOOut>> GetEntries(DashboardDbContext db)
+        => (await db.Entries!.ToListAsync()).Select(entryMapper.Map);
+
+    private async Task<IResult> CreateEntry(DashboardDbContext db, EntryDTOIn entryDTOIn) {
+        var newEntry = entryMapper.Map(entryDTOIn);
+
+        // TODO - Add validation logic here
+
+        await db.Entries!.AddAsync(newEntry);
+        await db.SaveChangesAsync();
+        return Results.Created($"/entires/{newEntry.Id}", entryMapper.Map(newEntry));
+    }
 }

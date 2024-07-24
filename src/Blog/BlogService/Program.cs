@@ -1,14 +1,12 @@
-using BlogService.Api;
+﻿using BlogService.Api;
 using BlogService.Infrastructure;
 using BlogService.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlogService;
 
-public sealed class Program
-{
-    private static void Main(string[] args)
-    {
+public sealed class Program {
+    private static void Main(string[] args) {
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddEndpointsApiExplorer();
@@ -27,14 +25,12 @@ public sealed class Program
 
         var app = builder.Build();
 
-        using (var scope = app.Services.CreateScope())
-        {
+        using (var scope = app.Services.CreateScope()) {
             var dbContext = scope.ServiceProvider.GetRequiredService<BlogDbContext>();
             dbContext.Database.Migrate();
         }
 
-        if (app.Environment.IsDevelopment())
-        {
+        if (app.Environment.IsDevelopment()) {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
@@ -48,8 +44,7 @@ public sealed class Program
 
     }
 
-    private static void AddEndpoints(WebApplication app)
-    {
+    private static void AddEndpoints(WebApplication app) {
         new EntryApi(new EntryMapper()).AddEndpoints(app);
     }
 }
