@@ -27,6 +27,7 @@ main() {
         "./src/Dev/Dev/"
         "./src/Blog/BlogService/"
         "./src/Identity/"
+        "./src/Dashboard/Dashboard/"
     )
     echo "Clearing output directory..."
     clear_output_directory $output_directory

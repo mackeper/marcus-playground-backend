@@ -1,9 +1,7 @@
-namespace Dashboard;
+﻿namespace Dashboard;
 
-public class Program
-{
-    public static void Main(string[] args)
-    {
+public class Program {
+    public static void Main(string[] args) {
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddEndpointsApiExplorer();
@@ -18,21 +16,23 @@ public class Program
 
         var app = builder.Build();
 
-        if (app.Environment.IsDevelopment())
-        {
+        if (app.Environment.IsDevelopment()) {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
 
-        app.UseHttpsRedirection();
+        if (app.Environment.IsProduction()) {
+            app.UseExceptionHandler("/error");
+            app.UseHttpsRedirection();
+        }
 
         AddEndpoints(app);
 
+        app.UseCors();
         app.Run();
     }
 
-    private static void AddEndpoints(WebApplication app)
-    {
+    private static void AddEndpoints(WebApplication app) {
         var summaries = new[]
         {
             "Freezing",
@@ -47,8 +47,7 @@ public class Program
             "Scorching"
         };
 
-        app.MapGet("/weatherforecast", () =>
-        {
+        app.MapGet("/weatherforecast", () => {
             var forecast = Enumerable.Range(1, 5).Select(index =>
                 new WeatherForecast
                 (
@@ -65,8 +64,7 @@ public class Program
         new Todo.Api().RegisterEndpoints(app);
     }
 
-    record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-    {
+    record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary) {
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }
