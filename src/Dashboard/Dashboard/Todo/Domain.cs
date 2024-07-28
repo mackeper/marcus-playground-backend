@@ -1,4 +1,23 @@
-﻿public record Entry(Guid Id, string Title, string Content, DateTime CreatedAt, DateTime? CompletedAt, bool IsCompleted);
+﻿namespace Dashboard.Todo;
+
+public class Entry {
+    public Guid Id { get; init; }
+    public string Title { get; init; }
+    public string Content { get; init; }
+    public DateTime CreatedAt { get; init; }
+    public DateTime? CompletedAt { get; set; }
+    public bool IsCompleted { get; set; }
+
+    public Entry(Guid id, string title, string content, DateTime createdAt, DateTime? completedAt, bool isCompleted) {
+        Id = id;
+        Title = title;
+        Content = content;
+        CreatedAt = createdAt;
+        CompletedAt = completedAt;
+        IsCompleted = isCompleted;
+    }
+}
+
 public record EntryDTOOut(Guid Id, string Title, string Content, long CreatedAt, long? CompletedAt, bool IsCompleted);
 public record EntryDTOIn(string Title, string Content);
 
@@ -12,8 +31,7 @@ public class EntryMapper {
             entryDTO.CompletedAt.HasValue
                 ? DateTimeOffset.FromUnixTimeMilliseconds(entryDTO.CompletedAt.Value).UtcDateTime
                 : null,
-            entryDTO.IsCompleted
-            );
+            entryDTO.IsCompleted);
 
     public EntryDTOOut Map(Entry entry)
         => new(
@@ -24,8 +42,8 @@ public class EntryMapper {
             entry.CompletedAt.HasValue
                 ? new DateTimeOffset(entry.CompletedAt.Value).ToUnixTimeMilliseconds()
                 : null,
-            entry.IsCompleted
-            );
+            entry.IsCompleted);
+
     public Entry Map(EntryDTOIn entryDTO)
         => new(
             Guid.NewGuid(),
@@ -33,6 +51,5 @@ public class EntryMapper {
             entryDTO.Content,
             DateTime.UtcNow,
             null,
-            false
-            );
+            false);
 }

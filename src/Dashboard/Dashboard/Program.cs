@@ -1,4 +1,6 @@
 ﻿using Dashboard.Infrastructure;
+using Dashboard.MealPlan.Domain;
+using Dashboard.Todo;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dashboard;
@@ -48,5 +50,6 @@ public class Program {
 
     private static void AddEndpoints(WebApplication app) {
         new Todo.Api(new EntryMapper()).RegisterEndpoints(app);
+        new MealPlan.Api(new MealPlanMapper(new MealMapper())).RegisterEndpoints(app);
     }
 }

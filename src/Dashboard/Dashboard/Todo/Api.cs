@@ -14,6 +14,9 @@ public class Api {
         var group = app.MapGroup("/todo");
         group.MapGet("", GetEntries);
         group.MapPost("", CreateEntry);
+        group.MapPut("/{uuid}/complete", CompleteEntry);
+        group.MapPut("/{uuid}/uncomplete", UncompleteEntry);
+        group.MapDelete("/{uuid}", DeleteEntry);
     }
 
     private async Task<IEnumerable<EntryDTOOut>> GetEntries(DashboardDbContext db)
@@ -27,5 +30,42 @@ public class Api {
         await db.Entries!.AddAsync(newEntry);
         await db.SaveChangesAsync();
         return Results.Created($"/entires/{newEntry.Id}", entryMapper.Map(newEntry));
+    }
+
+    private async Task<IResult> CompleteEntry(DashboardDbContext db, Guid uuid) {
+        var entry = await db.Entries!.FindAsync(uuid);
+        if (entry == null) {
+            return Results.NotFound();
+        }
+
+        entry.IsCompleted = true;
+        entry.CompletedAt = DateTime.UtcNow;
+
+        await db.SaveChangesAsync();
+        return Results.Ok();
+    }
+
+    private async Task<IResult> UncompleteEntry(DashboardDbContext db, Guid uuid) {
+        var entry = await db.Entries!.FindAsync(uuid);
+        if (entry == null) {
+            return Results.NotFound();
+        }
+
+        entry.IsCompleted = false;
+        entry.CompletedAt = null;
+
+        await db.SaveChangesAsync();
+        return Results.Ok();
+    }
+
+    private async Task<IResult> DeleteEntry(DashboardDbContext db, Guid uuid) {
+        var entry = await db.Entries!.FindAsync(uuid);
+        if (entry == null) {
+            return Results.NotFound();
+        }
+
+        db.Entries!.Remove(entry);
+        await db.SaveChangesAsync();
+        return Results.Ok();
     }
 }
