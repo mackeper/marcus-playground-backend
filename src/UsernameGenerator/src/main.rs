@@ -2,15 +2,14 @@ mod components;
 
 use axum::{
     extract::Query,
+    http::{header::CONTENT_TYPE, Method, StatusCode},
     routing::get,
-    http::{StatusCode, header::CONTENT_TYPE, Method},
-    Json,
-    Router,
+    Json, Router,
 };
-use components::{get_animal, get_adjective, get_nouns, get_cool_numbers};
-use serde::{Deserialize};
-use serde_with::{serde_as};
-use tower_http::cors::{CorsLayer, Any};
+use components::{get_adjective, get_animal, get_cool_numbers, get_nouns};
+use serde::Deserialize;
+use serde_with::serde_as;
+use tower_http::cors::{Any, CorsLayer};
 
 #[tokio::main]
 async fn main() {
@@ -21,11 +20,11 @@ async fn main() {
         .allow_origin(Any)
         .allow_headers([CONTENT_TYPE]);
 
-    let app = Router::new()
-        .route("/", get(get_username))
-        .layer(cors);
+    let app = Router::new().route("/", get(get_username)).layer(cors);
 
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:5004").await.unwrap();
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:5004")
+        .await
+        .unwrap();
     axum::serve(listener, app).await.unwrap();
 }
 

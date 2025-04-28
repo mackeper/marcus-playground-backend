@@ -1,4 +1,4 @@
-use rand::seq::SliceRandom;
+use rand::seq::IteratorRandom;
 
 pub fn get_animal(count: usize) -> Vec<String> {
     let content = include_str!("animals.txt");
@@ -21,10 +21,9 @@ pub fn get_cool_numbers(count: usize) -> Vec<String> {
 }
 
 fn get_count_random(content: String, count: usize) -> Vec<String> {
-    content
-        .lines()
-        .collect::<Vec<&str>>()
-        .choose_multiple(&mut rand::thread_rng(), count)
-        .map(|s| s.to_string())
+    let lines: Vec<&str> = content.lines().collect();
+    let mut rng = rand::thread_rng();
+    (0..count)
+        .map(|_| lines.iter().choose(&mut rng).unwrap().to_string())
         .collect()
 }
