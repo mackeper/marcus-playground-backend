@@ -18,7 +18,8 @@ publish_project() {
     echo "Project $project_name published to $output_path"
 
     # Publish to cloud
-    # scp -r $output_path/* gcp:~/Services/$project_name
+    ssh gcp "mkdir -p ~/Services/test/$project_name"
+    scp -r $output_path/* gcp:~/Services/test/$project_name
 }
 
 main() {
